@@ -9,67 +9,93 @@
 
     \subsection{什麼是STL}
 
-    又稱為Standard Template Liberty。
+    想像一個狀況，你今天想要使用電腦，那你會怎麼做？
+    零零散散購買主機板、CPU、記憶體、顯示卡、硬碟等等自己組裝固然可以，但直接購買一台完整的電腦是否比較方便？
+    STL就是這樣的東西。
+    STL是\texttt{C++}的標準模板庫（Standard Template Library），
+    它提供了一些常用的資料結構，讓我們可以更方便地使用\texttt{C++}進行程式設計。
+
+    STL的目的是為了讓我們可以更快速地開發程式，而不需要從頭開始實作所有的資料結構和演算法。
+    白話來說，他其實就是把東西打包好方便我們使用。
     
-    \begin{itemize}
-        \item 可以裝資料的容器
-        \item 刻好的模板，方便我們使用
-    \end{itemize}
+    以下逐一介紹STL的各種資料結構。
     
     \subsection{string}
+    \texttt{string}是\texttt{C++}中用來處理字串的資料結構，你可以把他看成是一個字元陣列，
+    但它提供了更多的功能，例如自動管理記憶體、支援字串操作等。
+    \texttt{string}的使用方式與陣列類似，但它有一些特別的功能，例如可以自動調整大小、支援字串連接等。
+    \newpage
+    以下是一些常用的\texttt{string}操作：
 
-\begin{lstlisting}[caption=string 用法]
-// declare 宣告
-string s;
+    \begin{lstlisting}[caption=string 用法]
+    // declare 宣告
+    string s;
 
-// give value 輸入
-cin>>s;
-getline(cin,s); // 整行的
+    // give value 輸入
+    cin>>s;
+    getline(cin,s); 
 
-// find one index
-s[5];
+    // 取得某一個位置的值，和陣列一樣
+    s[5];
 
-// size 長度
-// good
-cout<<s.size()<<s.length();
-// bad
-cout<<strlen(s);
+    // size 長度
+    // good
+    cout<<s.size()<<s.length();
+    // bad
+    cout<<strlen(s);
 
-// clear 清空
-s.clear();
-\end{lstlisting}
+    // clear 清空
+    s.clear();
+    
+    // 連接
+    string s1="abc",s2="def";
+    s=s1+s2;
+    \end{lstlisting}
 
+    在使用\texttt{string}時，請注意以下幾點：
+    \begin{itemize}
+        \item \texttt{string}的大小可以動態調整，不需要預先指定大小。
+        \item \texttt{string}支援字串操作，例如連接、比較、搜尋等。
+        \item 在取得字串長度時，不建議使用\texttt{strlen()}，因為他的的時間複雜度是\(\mathcal{O}(n)\)，
+        而\texttt{string}的\texttt{size()}和\texttt{length()}方法的時間複雜度是\(\mathcal{O}(1)\)。
+        \item \texttt{string}的字元編碼是\texttt{UTF-8}，所以可以處理多種語言的字串。
+    \end{itemize}
     \subsection{vector}
 
-\begin{lstlisting}[caption=vector 用法]
-// declare 宣告
-vector<int> v;
-vector<char> v[10005];// 這樣宣告的是10005個vector
-// 而不是內有10005個元素的vector
-// 如果需要宣告有10005個元素的vector
-vector<int> v(10005);
-vector<int> v(10005,-1); // 所有元素皆為-1
+    \texttt{vector}是\texttt{C++}中用來處理動態陣列的資料結構，
+    它提供了自動管理記憶體的功能，並且支援隨機存取。
+    \texttt{vector}的使用方式與陣列類似，但它有一些特別的功能，例如可以自動調整大小、支援插入和刪除等。
+    \newpage
+    以下是一些常用的\texttt{vector}操作：
+    \begin{lstlisting}[caption=vector 用法]
+    // declare 宣告
+    vector<int> v;
+    vector<char> v[10005];// 這樣宣告的是10005個vector，可以看成是二維陣列
+    // 而不是內有10005個元素的vector
+    // 如果需要宣告有10005個元素的vector
+    vector<int> v(10005);
+    vector<int> v(10005,-1); // 所有元素皆為-1
 
-// add element 新增元素
-// faster 因為使用建構式而非複製。
-v.emplace_back(x);
-// slower
-v.push_back(x);
+    // add element 新增元素
+    // faster 因為使用建構式而非複製。
+    v.emplace_back(x);
+    // slower
+    v.push_back(x);
 
-// erase back 從最後一個移除元素
-v.pop_back()
+    // erase back 從最後一個移除元素
+    v.pop_back()
 
-// go through 遍歷
-for(auto i:v){
-    // i:the elements of vector v
-}
+    // go through 遍歷
+    for(auto i:v){
+        // i:the elements of vector v
+    }
 
-// size
-v.size()
-    
-// clear
-v.clear();
-\end{lstlisting}
+    // size
+    v.size()
+        
+    // clear
+    v.clear();
+    \end{lstlisting}
 
     \subsection{stack}
 
