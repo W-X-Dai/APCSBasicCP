@@ -98,82 +98,101 @@
     \end{lstlisting}
 
     \subsection{stack}
+    堆疊（stack）是一種先進後出（Last In First Out, LIFO）的資料結構。
+    在\texttt{C++}中，堆疊通常使用\texttt{stack}容器來實現。
+    堆疊的操作主要包括入堆疊（push）、出堆疊（pop）和查詢頂部元素（top）。
+    堆疊的使用方式與陣列類似，但它有一些特別的功能，例如只能在頂部進行插入和刪除操作。
+    可以把堆疊想像成一堆疊起來的盤子，你只能放新的盤子在最上面或是從最上面拿走盤子。
 
-\begin{lstlisting}[caption=stack 用法]
-// declare 宣告
-stack<int> st;
-stack<char> st;
-// faster
-stack<int,vector<int>> st;
+    以下是一些常用的\texttt{stack}操作：
 
-// add element to back 就是 push_back()
-st.push(x);
-st.emplace(x); // emplace_back() in vector
+    \begin{lstlisting}[caption=stack 用法]
+    // declare 宣告
+    stack<int> st;
+    stack<char> st;
+    // faster
+    stack<int,vector<int>> st;
 
-// query the last element 頂部元素
-st.top();
+    // add element to back 就是 push_back()
+    st.push(x);
+    st.emplace(x); // emplace_back() in vector
 
-// move out the last element 移除頂部元素
-st.pop();
+    // query the last element 頂部元素
+    st.top();
 
-// check is empty
-st.empty();
+    // move out the last element 移除頂部元素
+    st.pop();
 
-// size
-st.size()
-\end{lstlisting}
+    // check is empty
+    st.empty();
+
+    // size
+    st.size()
+    \end{lstlisting}
+    值得注意的是，\texttt{stack}的操作\texttt{vector}也可以實現，但他的速度比\texttt{vector}慢許多。
+
 
     \subsection{queue}
 
-\begin{lstlisting}[caption=queue 用法]
-// declare
-queue<int> qu;
+    佇列（queue）是一種先進先出（First In First Out, FIFO）的資料結構。
+    在\texttt{C++}中，佇列通常使用\texttt{queue}容器來實現。
+    佇列的操作主要包括入佇列（push）、出佇列（pop）和查詢前端元素（front）。
+    和堆疊不同，佇列的操作是先進先出，你可以把佇列想像成一個排隊的隊伍，
+    最先到的人最先被服務，最慢到的人只能排在最後面。
 
-// add element to back
-qu.push(x);
+    以下是一些常用的\texttt{queue}操作：
 
-// query the first element
-qu.front();
+    \begin{lstlisting}[caption=queue 用法]
+    // declare
+    queue<int> qu;
 
-// move out the last element
-qu.pop();
+    // add element to back
+    qu.push(x);
 
-// check is empty
-qu.empty();
+    // query the first element
+    qu.front();
 
-// size
-qu.size()
-\end{lstlisting}
+    // move out the last element
+    qu.pop();
+
+    // check is empty
+    qu.empty();
+
+    // size
+    qu.size()
+    \end{lstlisting}
 
     \subsection{deque}
 
-    雙端佇列，上一章有用到。
+    雙端佇列，其實就是堆疊和佇列的結合，
+    你可以在兩端進行插入和刪除操作。
+    在\texttt{C++}中，雙端佇列通常使用\texttt{deque}容器來實現。
 
-\begin{lstlisting}[caption=deque 用法]
-// declare
-deque<int> dq;
+    \begin{lstlisting}[caption=deque 用法]
+    // declare
+    deque<int> dq;
 
-// add element to back
-dq.push_back(x);
-dq.push_front(x);
+    // add element to back
+    dq.push_back(x);
+    dq.push_front(x);
 
-// query the last element
-dq.front();
-dq.back();
+    // query the last element
+    dq.front();
+    dq.back();
 
-// move out the last element
-dq.pop_back();
-dq.pop_front();
+    // move out the last element
+    dq.pop_back();
+    dq.pop_front();
 
-// 也可以像陣列一樣用
-dq[10];
+    // 也可以像陣列一樣用
+    dq[10];
 
-// check is empty
-dq.empty();
+    // check is empty
+    dq.empty();
 
-// size
-dq.size()
-\end{lstlisting}
+    // size
+    dq.size()
+    \end{lstlisting}
 
     \subsection{priority queue}
 
