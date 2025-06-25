@@ -196,42 +196,33 @@
 
     \subsection{priority queue}
 
-    顧名思義，優先佇列（priority queue）是一種特殊的佇列。他的操作看似與一般佇列相同--從後面加入元素，從前面提出。
-    但這個佇列會維護一個heap結構，確保你每次提出的元素都是目前佇列中最大的（或最小的）元素。
+    本質上是一個使用vector維護的heap資料結構。
 
-    一言以蔽之，他的本質上是一個使用vector維護的heap資料結構。
+\begin{lstlisting}[caption=priority queue 用法]
+// declare (最大堆)
+priority_queue<int> pq;
+// 最小堆
+priority_queue<int,vector<int>,greater<int>> pq;
 
-    \begin{lstlisting}[caption=priority queue 用法]
-    // declare (最大堆)
-    priority_queue<int> pq;
-    // 最小堆
-    priority_queue<int,vector<int>,greater<int>> pq;
+// add element into the pq
+pq.push(x);
 
-    // add element into the pq
-    pq.push(x);
+// query the element (對最大堆來說就是最大值)
+// (對最小堆來說就是最小值)
+pq.top();
 
-    // query the element (對最大堆來說就是最大值)
-    // (對最小堆來說就是最小值)
-    pq.top();
+// move out the max/min element
+pq.pop();
 
-    // move out the max/min element
-    pq.pop();
-
-    // check is empty
-    pq.empty()
-        
-    // size
-    pq.size()
-    \end{lstlisting}
+// check is empty
+pq.empty()
+    
+// size
+pq.size()
+\end{lstlisting}
 
     \subsection{map}
-    有時候，我們的資料對應到的不一定是編號。舉例而言，我有一大堆員工，如果要使用員工姓名快速查詢某個員工的工號該怎麼做？
-    線性搜索當然是可行的，但這樣時間複雜度很高。而C++的STL提供了一個稱為\texttt{map}的資料結構，可以在\(\mathcal{O}(\log n)\)的時間內完成查詢。
-    \texttt{map}是一種關聯容器，它將鍵（key）和值（value）對應起來。
-    在\texttt{map}中，每個鍵都是唯一的，並且可以用來快速查詢對應的值。
-    \texttt{map}的使用方式與陣列類似，但它有一些特別的功能，例如可以使用任意類型的鍵、支援自動排序等。
-
-    題外話，\texttt{map}與\texttt{set}都是使用紅黑樹實作的資料結構，那是一種稱為平衡樹的資料結構。
+    map與set都是使用紅黑樹實作的資料結構，那是一種稱為平衡樹的資料結構。
     未來在進階資料結構時會提到一種稱為Treap的平衡樹。
 
 \begin{lstlisting}[caption=map 用法]
@@ -270,7 +261,6 @@ mp.size()
 
     \subsection{set}
 
-    \texttt{set}的中文就是集合，他也就是一個集合，所有的操作基本上都是針對集合的操作。
 \begin{lstlisting}[caption=set 用法]
 // declare
 set<int> S;
@@ -305,9 +295,8 @@ S.size()
 \end{lstlisting}
 
     \subsection{bitset}
-    \texttt{bitset}可以看成是一個bool陣列，
-    但他在做位元運算時會比bool陣列快上許多。
-    有時候會用到，但真的很少需要它。
+    bitset在做位元運算時會比bool陣列快上許多。
+    所以有時候會用到，但真的很少需要它。
 
 \begin{lstlisting}[caption=bitset 用法]
 // declare
