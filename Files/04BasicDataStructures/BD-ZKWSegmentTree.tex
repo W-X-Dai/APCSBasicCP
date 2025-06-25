@@ -1,0 +1,82 @@
+\section{ZKW線段樹}
+    \author{李卓岳}
+    \subsection{概念與簡介}
+
+    ZKW線段樹是一種高效的線段樹實現方式，由清華大學張昆瑋（ZKW）提出，
+    以非遞迴、堆式儲存和位元運算為主要特色，在算法競賽以程式碼精簡和高效能資料結構設計而廣受推崇。
+
+    \begin{enumerate}
+        \item \textbf{非遞迴：}自底向上的更新讓ZKW線段樹使用迴圈而非遞迴來實現查詢和修改操作，這樣可以避免遞迴帶來的額外開銷。
+        \item \textbf{堆式儲存：}ZKW線段樹強制以完滿二元樹的結構儲存資料，用類似堆(Heap)的索引方式，這樣可以提高存取效率。
+        \item \textbf{位元運算：}ZKW線段樹利用二進制編號的特性，使用位元運算來表示節點之間的關係，這樣可以更快速地進行查詢和更新操作。
+    \end{enumerate}
+
+    \subsection{實作}
+
+    \textbf{建樹操作}
+
+    這裡運用到的概念是完滿二元樹的特性，這也是為甚麼要強制儲存成完滿二元樹結構的原因。
+    當然，如果資料數量並非2的次方，無法填滿完滿二元樹的話，我們可以補0或給特定初始值(依使用要求而定)。
+    以下是完滿二元樹的特性:
+    \begin{itemize}
+        \item 完滿二元樹的節點編號從1開始，根節點為1。
+        \item 對於節點編號為idx的節點，其左子節點編號為\(idx\times2\)，右子節點編號為\(idx\times2+1\)。
+        \item 當前節點編號是父節點編號除以2的結果(無條件捨去)。
+        \item 每層節點按順序排列，第n層有\(2^{n-1}\)個節點。
+    \end{itemize}
+
+    \begin{lstlisting}[caption=ZKW建樹]
+    void init(){
+        // maxn用來定位最後一層的開始編號
+        // 小於n+2的原因則是為了左右各預留一個節點用於置放查詢指標
+        while(maxn<n+2) maxn<<=1;
+        // seg用來儲存線段樹的節點，初始值為0
+        for(int i=0;i<n;++i)seg[i+maxn+1]=輸入資料;
+        // 由下而上建樹，operation(a,b)是合併兩個節點的操作，依要求而定
+        for(int i=maxn-1;i;--i)seg[i]=operation(seg[i<<1],seg[i<<1|1]);
+    }
+    \end{lstlisting}
+
+    \textbf{查詢操作}
+
+    單點查詢的部分很簡單，就是從葉節點開始，不斷向父節點走，沿路累加權重即可。
+    但區間查詢就需要用到位元運算的特性了，這裡我們要以擴增左右區段的方式進行查詢。舉例而言，假設要查詢的是閉區間[l,r]，我們就會將其轉成開區間(l-1,r+1)
+    這時觀察二進制節點的特性我們可以總結出對於查詢區間[l,r]的規律:
+    \begin{itemize}
+        \item 如果l是左節點，則兄弟節點必在查詢區間內。
+        \item 如果r是右節點，則兄弟節點必在查詢區間內。
+        \item 查詢終止的條件是l,r互為兄弟節點。
+    \end{itemize}
+
+    以下是查詢的實作：
+    \begin{lstlisting}[caption=ZKW區間查詢]
+    int query(int l,int r){
+        int num=初始值;
+        for(l+=maxn,r+=maxn+2;l^r^1;l>>=1,r>>=1){
+            // 當l是左節點時，將兄弟節點累計進去
+            if(~l&1)num=operation(num,seg[l^1]);
+            // 當r是右節點時，將兄弟節點累計進去
+            if(r&1) num=operation(num,seg[r^1]);
+        }
+        return num;
+    }
+    \end{lstlisting}
+
+    \textbf{修改操作}
+
+    單點修改的部分很單點查詢類似，就是從葉節點開始，不斷向父節點走，沿路修改父節點。
+    然而區間修改的話就需要用到懶人標記了，ZKW的懶人標記概念與一般的懶人標記類似，但實作較為複雜，這裡就不再過多贅述。
+
+    以下是修改的實作：
+    \begin{lstlisting}[caption=ZKW區間查詢]
+    void modify(int idx,int num){
+        idx+=maxn+1;
+        seg[idx] = num;
+        while(idx){
+            idx>>=1;
+            seg[idx]=operation(seg[idx<<1],seg[idx<<1|1]);
+        }
+    }
+    \end{lstlisting}
+
+   
